@@ -3,6 +3,7 @@ import HomeView from '../views/HomeView.vue'
 import InicioView from '../views/InicioView.vue'
 import EstudentView from '../views/EstudentView.vue'
 import DestinosView from '../views/DestinosView.vue'
+import ColchonesView from '../views/ColchonesView.vue'
 import LoginView from '../views/LoginView.vue'
 
 
@@ -22,6 +23,11 @@ const routes = [
     path: '/destinos',
     name: 'destinos',
     component: DestinosView
+  },
+  {
+    path: '/colchones',
+    name: 'colchones',
+    component: ColchonesView
   },
   {
     path: '/login',

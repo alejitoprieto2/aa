@@ -8,6 +8,7 @@
             <li class="item-menu">VENTAS</li>
             <li class="item-menu">REGISTRO</li>
             <li class="item-menu">SUSCRIPCION</li>
+            <router-link to="/colchones" class="item-menu">COLCHONES</router-link>
         </nav>
     </header>
 </template>
@@ -53,6 +54,7 @@ export default {
     list-style: none;
     background-color: gray;
     color: #000;
+    text-decoration: none;
     padding: 1rem;
     width: 15%;
     display: flex;
