@@ -1,6 +1,7 @@
 <template>
     <main>
-        <ButtonPrime severity="danger" variant="outlined" @click="open = true">Nuevo destino</ButtonPrime>
+        <ButtonPrime severity="success" variant="outlined" @click="open = true">Nuevo destino</ButtonPrime>
+        <ButtonPrime severity="danger" variant="outlined" @click="cerrarSesion">Cerrar Sesion</ButtonPrime>
 
         <DialogPrime v-model:visible="open" modal header="Edit Profile" :style="{ width: '24rem' }">
             <div class="flex flex-col gap-4">
@@ -54,28 +55,49 @@ export default {
     methods: {
         getAllDestinos: function () {
             this.axios
-                .get('https://solincosta.com/apiv2.php?action=getalldestinos')
+                .get('https://solincosta.com/apiv2.php?action=getalldestinos',
+                    { headers: { Authorization: 'Bearer ' + localStorage.getItem('token') } }
+                )
                 .then(response => {
                     this.destinos = response.data.respuesta;
                     console.log(this.destinos);
                     console.log(response.data);
-                    
+
                 })
         },
 
         guardarDestino: async function () {
-           await this.axios
+            await this.axios
                 .post('https://solincosta.com/apiv2.php?action=savedestino',
                     {
                         nombre: this.nuevoDestino.nombre,
                         imagen: this.nuevoDestino.imagen,
                         precio: this.nuevoDestino.precio,
-                    }
+                    },
+                    { headers: { Authorization: 'Bearer ' + localStorage.getItem('token') } }
                 )
                 .then(response => {
-                    if(response.data.status){
+                    if (response.data.status) {
                         alert("Destino guardado exitosamente");
-                    }else{
+                    } else {
+                        alert("ERROR");
+                        console.log(response.data);
+                    }
+                })
+        },
+
+        cerrarSesion: async function () {
+            await this.axios
+                .post('https://solincosta.com/apiv2.php?action=cerrarsesion',
+                    {},
+                    { headers: { Authorization: 'Bearer ' + localStorage.getItem('token') } }
+                )
+                .then(response => {
+     
+                    if (response.status) {
+                        localStorage.removeItem("token");
+                        this.$router.push("/login");
+                    } else {
                         alert("ERROR");
                         console.log(response.data);
                     }
